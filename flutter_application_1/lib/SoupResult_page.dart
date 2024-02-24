@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
+  TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,57 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                DropdownButton<String>(
+                  items: <String>[
+                    'Pork',
+                    'Chicken',
+                    'Salmon',
+                    'Chilli',
+                    'Tomato',
+                    'Lemon',
+                    'Basil',
+                    'Shrimp'
+                  ].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {},
+                  hint: Text('Select Ingredients'),
+                ),
+                IconButton(
+                  icon: Icon(Icons.search, color: Colors.black),
+                  onPressed: () {
+                    String searchQuery = _searchController.text;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResultsPage(searchQuery: searchQuery),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
         children: [
           GridView.count(
             crossAxisCount: 2,
@@ -112,8 +163,11 @@ class MyHomePage extends StatelessWidget {
                 description: "Estimate Time: 23 minutes",
                 detail: "See More>>",
                 image: "https://www.seannaskitchen.com/wp-content/uploads/2021/04/Cheesy-Potato-Soup-Hero-3.jpg",
-              ),
-            ],
+               ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -206,6 +260,22 @@ class ProductBox extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+class ResultsPage extends StatelessWidget {
+  final String searchQuery;
+  ResultsPage({required this.searchQuery});
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Search Results'),
+      ),
+      body: Center(
+        child: Text('Displaying results for: $searchQuery'),
       ),
     );
   }

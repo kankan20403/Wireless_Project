@@ -68,55 +68,106 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
+      body: Column(
         children: [
-          GridView.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20.0,
-            crossAxisSpacing: 10.0,
-            padding: EdgeInsets.all(10.0),
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              ProductBox(
-                name: "Tom Yum Kung",
-                description: "Estimate Time: 15 minutes",
-                Detail: "See More>>",
-                image: "https://asianinspirations.com.au/wp-content/uploads/2018/07/R00067_Tom-Yum-Goong-589x412.jpg",
-              ),
-              ProductBox(
-                name: "Tom Kha Kai ",
-                description: "Estimate Time: 17 minutes",
-                Detail: "See More>>",
-                image: "https://hot-thai-kitchen.com/wp-content/uploads/2014/06/Tom-kha-gai-new-sq.jpg",
-              ),
-              ProductBox(
-                name: "Hamberger",
-                description: "Estimate Time: 10 minutes",
-                Detail: "See More>>",
-                image: "https://www.recettesetcabas.com/data/recettes/2379-1-fiche@64E36067-hamburger-a-la-tomme-de-savoie-bacon-et-salade.webp",
-              ),
-              ProductBox(
-                name: "Suhsi Roll",
-                description:
-                    "Estimate Time: 25 minutes",
-                Detail: "See More>>",
-                image: "https://www.happyfoodstube.com/wp-content/uploads/2016/03/homemade-sushi-image-500x500.jpg",
-              ),
-              ProductBox(
-                name: "French Fried",
-                description: "Estimate Time: 15 minutes",
-                Detail: "See More>>",
-                image: "https://www.recipetineats.com/wp-content/uploads/2022/09/Fries-with-rosemary-salt_1.jpg",
-              ),
-              ProductBox(
-                name: "Pad Kra Pao",
-                description:
-                    "Estimate Time: 23 minutes",
-                Detail: "See More>>",
-                image: "https://www.foodandwine.com/thmb/Z5FeE6c1mJfx6A6x1FBWSfzzo80=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Pad-Krapow-1-FT-RECIPE0423-212e69119f6d4d2589117ead80cccc4d.jpg",
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                DropdownButton<String>(
+                  items: <String>[
+                    'Pork',
+                    'Chicken',
+                    'Salmon',
+                    'Chilli',
+                    'Tomato',
+                    'Lemon',
+                    'Basil',
+                    'Shrimp'
+                  ].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {},
+                  hint: Text('Select Ingredients'),
+                ),
+                IconButton(
+                  icon: Icon(Icons.search, color: Colors.black),
+                  onPressed: () {
+                    String searchQuery = _searchController.text;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResultsPage(searchQuery: searchQuery),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                GridView.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20.0,
+                  crossAxisSpacing: 10.0,
+                  padding: EdgeInsets.all(10.0),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    ProductBox(
+                      name: "Tom Yum Kung",
+                      description: "Estimate Time: 15 minutes",
+                      Detail: "See More>>",
+                      image: "https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2023/04/24/5608757681874e1ea5df1aa41d5b2e3d_How_To_Make_Tom_Yam_Kung_The_Epitome_Of_Delicious_And_Nutritious_Thai_Cuisine3.jpg",
+                    ),
+                    ProductBox(
+                      name: "Tom Kha Kai ",
+                      description: "Estimate Time: 17 minutes",
+                      Detail: "See More>>",
+                      image: "https://hot-thai-kitchen.com/wp-content/uploads/2014/06/Tom-kha-gai-new-sq.jpg",
+                    ),
+                    ProductBox(
+                      name: "Hamburger",
+                      description: "Estimate Time: 10 minutes",
+                      Detail: "See More>>",
+                      image: "https://www.recettesetcabas.com/data/recettes/2379-1-fiche@64E36067-hamburger-a-la-tomme-de-savoie-bacon-et-salade.webp",
+                    ),
+                    ProductBox(
+                      name: "Sushi Roll",
+                      description: "Estimate Time: 25 minutes",
+                      Detail: "See More>>",
+                      image: "https://www.happyfoodstube.com/wp-content/uploads/2016/03/homemade-sushi-image-500x500.jpg",
+                    ),
+                    ProductBox(
+                      name: "French Fries",
+                      description: "Estimate Time: 15 minutes",
+                      Detail: "See More>>",
+                      image: "https://www.recipetineats.com/wp-content/uploads/2022/09/Fries-with-rosemary-salt_1.jpg",
+                    ),
+                    ProductBox(
+                      name: "Pad Kra Pao",
+                      description: "Estimate Time: 23 minutes",
+                      Detail: "See More>>",
+                      image: "https://www.foodandwine.com/thmb/Z5FeE6c1mJfx6A6x1FBWSfzzo80=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Pad-Krapow-1-FT-RECIPE0423-212e69119f6d4d2589117ead80cccc4d.jpg",
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -161,6 +212,7 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
 
 class ProductBox extends StatelessWidget {
   ProductBox({

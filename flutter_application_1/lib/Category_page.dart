@@ -80,29 +80,15 @@ class CategoryPage extends StatelessWidget {
               TableRow(
                 children: [
                   TableCell(
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'Main Course',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
+                    child: CategoryBox(
+                      image: 'https://www.foodandwine.com/thmb/20Fp26wbzSMgOtCdCZy0vpIK8Mo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/garlic-butter-prime-rib-FT-RECIPE0621-fca73e5fa8e046b0b03982757db51628.jpg',
+                      text: 'Main Course',
                     ),
                   ),
                   TableCell(
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'Appetizer',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
+                    child: CategoryBox(
+                      image: 'https://www.tasteofhome.com/wp-content/uploads/2018/01/Marinated-Cheese_EXPS_THCA18_41873_B01_23_3b-5.jpg',
+                      text: 'Appetizer',
                     ),
                   ),
                 ],
@@ -110,29 +96,15 @@ class CategoryPage extends StatelessWidget {
               TableRow(
                 children: [
                   TableCell(
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'Salad',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
+                    child: CategoryBox(
+                      image: 'https://www.foodandwine.com/thmb/q9tccMZgV9aifYtmlvh9qcPmb_8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Greek-Salad-Romaine-FT-RECIPE1222-8a49c63ede714dfb8fdc0c35088fcd18.jpg',
+                      text: 'Salad',
                     ),
                   ),
                   TableCell(
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'Soup',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
+                    child: CategoryBox(
+                      image: 'https://www.inspiredtaste.net/wp-content/uploads/2023/08/Creamy-Chicken-Noodle-Soup-Recipe-Video.jpg',
+                      text: 'Soup',
                     ),
                   ),
                 ],
@@ -140,29 +112,15 @@ class CategoryPage extends StatelessWidget {
               TableRow(
                 children: [
                   TableCell(
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'Dessert',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
+                    child: CategoryBox(
+                      image: 'https://www.foodandwine.com/thmb/ckc6L6xKox0WfpfO6dMkuVGPQOY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Angel-Food-Cake-with-Three-Berry-Compote-FT-RECIPE0323-541a780b871441e0ab14383ee38acc44.jpg',
+                      text: 'Dessert',
                     ),
                   ),
                   TableCell(
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'Beverage',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
+                    child: CategoryBox(
+                      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBC69MdMGh5GTOrgSt8MGavi6G_HZtZNS_3BLbpCxxNUGsJp1Z9951s9QHDBu9rEd8D-0&usqp=CAU',
+                      text: 'Beverage',
                     ),
                   ),
                 ],
@@ -170,29 +128,15 @@ class CategoryPage extends StatelessWidget {
               TableRow(
                 children: [
                   TableCell(
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'Breakfast',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
+                    child: CategoryBox(
+                      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVDyE-niK51KE8qs1CAbbMEOYNlfW4QuW1Ku3q9ThuoQ&s',
+                      text: 'Breakfast',
                     ),
                   ),
                   TableCell(
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'Lunch',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
+                    child: CategoryBox(
+                      image: 'https://simply-delicious-food.com/wp-content/uploads/2018/07/mexican-lunch-bowls-3.jpg',
+                      text: 'Lunch',
                     ),
                   ),
                 ],
@@ -201,38 +145,81 @@ class CategoryPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Theme(
-        data: ThemeData(
-          canvasColor: Color(0xFFFFDE59),
+      bottomNavigationBar: SizedBox(
+        height: 100, // Adjust the height as needed
+        child: Center(
+          child: Container(
+            color: Colors.yellow,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Image.network(
+                  'https://cdn-icons-png.flaticon.com/256/25/25694.png', // Image URL
+                  width: 50,
+                  height: 50,
+                ),
+                Image.network(
+                  'https://i.pinimg.com/originals/8b/5c/49/8b5c498ed69a64d629249d9abe4f44a6.png', // Image URL for the first icon
+                  width: 50,
+                  height: 50,
+                ),
+                Image.network(
+                  'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png', // Image URL for the second icon
+                  width: 50,
+                  height: 50,
+                ),
+                Image.network(
+                  'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png', // Image URL for the third icon
+                  width: 50,
+                  height: 50,
+                ),
+                Image.network(
+                  'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png', // Image URL for the fourth icon
+                  width: 50,
+                  height: 50,
+                ),
+              ],
+            ),
+          ),
         ),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.black.withOpacity(1),
-          items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.square),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.pin),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '',
-          ),
-        ],
       ),
-    ),
+    );
+  }
+}
+
+class CategoryBox extends StatelessWidget {
+  final String image;
+  final String text;
+
+  const CategoryBox({
+    required this.image,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(image),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(
+            Colors.black.withOpacity(0.5), // Adjust the opacity to control darkness
+            BlendMode.darken,
+          ),
+        ),
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }

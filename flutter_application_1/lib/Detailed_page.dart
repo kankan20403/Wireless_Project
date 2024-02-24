@@ -35,8 +35,8 @@ class MainPage extends StatelessWidget {
             DetailWidget(
               image:
                   'https://hot-thai-kitchen.com/wp-content/uploads/2022/10/pad-gaprao-beef-sq-2.jpg',
-              description: 'Pad Kra Pao Ingredients:\n'
-                  '100 g pork\n'
+              name: 'Pad Kra Pao',
+              ingredients: '100 g pork\n'
                   '1 cup holy basil leaves\n'
                   '3 garlic cloves, peeled\n'
                   '3 red chilies\n'
@@ -44,9 +44,8 @@ class MainPage extends StatelessWidget {
                   '1 tablespoon Fish Sauce\n'
                   '½ tablespoon sugar\n'
                   '1 tablespoon water\n'
-                  '2 tablespoons oil for frying\n'
-                  'Instructions\n'
-                  '1. Mix water, sugar, fish sauce, and oyster sauce together and set aside. \n'
+                  '2 tablespoons oil for frying',
+              method: '1. Mix water, sugar, fish sauce, and oyster sauce together and set aside. \n'
                   '2. If you have a mortar and pestle, pound garlic and chilies together. Otherwise you can chop them or slice thinly. \n'
                   '3. Heat a non-stick saucepan over high heat and add the oil. When the oil is hot, add chilies and garlic and stir-fry till fragrant, about 10 seconds. \n'
                   '4. Add pork and stir continuously for few minutes. When it is starting to look like cooked, add sauce mix and stir-fry till the sauce coats the meat evenly. If it is too dry, you can add a small splash of water. \n'
@@ -69,11 +68,10 @@ class MainPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            NavBarWidget(),
-            SizedBox(height: 20),
           ],
         ),
       ),
+      bottomNavigationBar: BottomBar(), // Use the custom bottom navigation bar
     );
   }
 }
@@ -98,88 +96,127 @@ class TitleWidget extends StatelessWidget {
   }
 }
 
-class DetailWidget extends StatelessWidget {
+class DetailWidget extends StatefulWidget {
   final String image;
-  final String description;
+  final String name;
+  final String ingredients;
+  final String method;
 
-  DetailWidget({required this.image, required this.description});
+  DetailWidget({
+    required this.image,
+    required this.name,
+    required this.ingredients,
+    required this.method,
+  });
 
   @override
+  _DetailWidgetState createState() => _DetailWidgetState();
+}
+
+class _DetailWidgetState extends State<DetailWidget> {
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            // Add functionality here
-            print('Image tapped');
-          },
-          child: Container(
-            width: 200,
-            height: 200,
-            color: Colors.grey,
-            child: Image.network(
-              image,
-              fit: BoxFit.cover,
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(height: 20),
+          GestureDetector(
+            onTap: () {
+              // Add functionality here
+              print('Image tapped');
+            },
+            child: Container(
+              width: 200,
+              height: 200,
+              color: Colors.grey,
+              child: Image.network(
+                widget.image,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 20),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 60),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              description,
-              textAlign: TextAlign.left,
-              style: TextStyle(fontSize: 18),
+          SizedBox(height: 20),
+          Text(
+            widget.name,
+            style: TextStyle(fontSize: 32),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 20),
+          Container(
+            padding: EdgeInsets.all(10),
+            color: Colors.yellow, // Box color
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Ingredients:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  widget.ingredients,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Method:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  widget.method,
+                ),
+              ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
-class NavBarWidget extends StatelessWidget {
+class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        color: Colors.yellow,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/HomePage');
-              },
-              child: Image.network(
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 0,
+      child: SizedBox(
+        height: 50,
+        child: Container(
+          color: Colors.yellow,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Image.network(
                 'https://cdn-icons-png.flaticon.com/256/25/25694.png',
                 width: 50,
                 height: 50,
               ),
-            ),
-            Image.network(
-              'https://static.thenounproject.com/png/4411488-200.png',
-              width: 50,
-              height: 50,
-            ),
-            Image.network(
-              'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png',
-              width: 50,
-              height: 50,
-            ),
-            Image.network(
-              'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png',
-              width: 50,
-              height: 50,
-            ),
-            Image.network(
-              'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png',
-              width: 50,
-              height: 50,
-            ),
-          ],
+              Image.network(
+                'https://i.pinimg.com/originals/8b/5c/49/8b5c498ed69a64d629249d9abe4f44a6.png',
+                width: 50,
+                height: 50,
+              ),
+              Image.network(
+                'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png',
+                width: 50,
+                height: 50,
+              ),
+              Image.network(
+                'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png',
+                width: 50,
+                height: 50,
+              ),
+              Image.network(
+                'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png',
+                width: 50,
+                height: 50,
+              ),
+            ],
+          ),
         ),
       ),
     );
