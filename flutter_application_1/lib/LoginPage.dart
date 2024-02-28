@@ -2,12 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Category',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: LoginPage(title: 'CoachCook Category Layout'), // Pass the title here
+    );
+  }
+}
+
+
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  final String title; // Define the title parameter
+
+  const LoginPage({Key? key, required this.title}) : super(key: key);
 
   @override
   Login_PageState createState() => Login_PageState();
 }
+
 
 class Login_PageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormBuilderState>();
@@ -16,11 +37,11 @@ class Login_PageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(200.0),
+        preferredSize: const Size.fromHeight(200.0),
         child: AppBar(
           flexibleSpace: Container(
-            padding: EdgeInsets.symmetric(vertical: 40.0),
-            child: Column(
+            padding: const EdgeInsets.symmetric(vertical: 40.0),
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -51,16 +72,16 @@ class Login_PageState extends State<LoginPage> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: FormBuilder(
           key: _formKey,
-          initialValue: {'username': '', 'password': ''},
+          initialValue: const {'username': '', 'password': ''},
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FormBuilderTextField(
                 name: 'username',
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                   filled: true,
                 ),
@@ -72,11 +93,11 @@ class Login_PageState extends State<LoginPage> {
                 ]),
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               FormBuilderTextField(
                 name: 'password',
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Password',
                   filled: true,
                 ),
@@ -90,7 +111,7 @@ class Login_PageState extends State<LoginPage> {
                   ),
                 ]),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -104,53 +125,53 @@ class Login_PageState extends State<LoginPage> {
                         print("Validation failed");
                       }
                     },
-                    color: Color(0xFFFFDE59),
-                    child: Text(
+                    color: const Color(0xFFFFDE59),
+                    child: const Text(
                       "Login",
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   MaterialButton(
                     onPressed: () {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
                         // Open forgetPasswordPage
                         Navigator.pushNamed(context, '/ ');
-                      } 
+                      }
                     },
-                    color: Color(0xFFFFDE59),
-                    child: Text(
+                    color: const Color(0xFFFFDE59),
+                    child: const Text(
                       "Forget Password",
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 15),
-              Align(
+              const SizedBox(height: 15),
+              const Align(
                 alignment: Alignment.center,
                 child: Text(
                   "or",
                   style: TextStyle(fontSize: 16, color: Colors.black),
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               MaterialButton(
                 onPressed: () {
                   _formKey.currentState!.save();
-                      
-                        // Open createPasswordPage
+
+                  // Open createPasswordPage
                   Navigator.pushNamed(context, '/ ');
-                      
+
                 },
-                color: Color(0xFFFFDE59),
-                child: Text(
+                color: const Color(0xFFFFDE59),
+                child: const Text(
                   "Create Password",
                   style: TextStyle(color: Colors.black),
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
             ],
           ),
         ),

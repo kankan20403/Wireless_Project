@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,20 +15,20 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({super.key, required this.title});
 
   final String title;
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(115.0),
+        preferredSize: const Size.fromHeight(115.0),
         child: AppBar(
           flexibleSpace: Container(
-            padding: EdgeInsets.symmetric(vertical: 0.0),
-            child: Column(
+            padding: const EdgeInsets.symmetric(vertical: 0.0),
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -66,12 +68,12 @@ class MyHomePage extends StatelessWidget {
                 Expanded(
                   child: TextField(
                     controller: _searchController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Search...',
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 DropdownButton<String>(
                   items: <String>[
                     'Pork',
@@ -89,10 +91,10 @@ class MyHomePage extends StatelessWidget {
                     );
                   }).toList(),
                   onChanged: (String? newValue) {},
-                  hint: Text('Select Ingredients'),
+                  hint: const Text('Select Ingredients'),
                 ),
                 IconButton(
-                  icon: Icon(Icons.search, color: Colors.black),
+                  icon: const Icon(Icons.search, color: Colors.black),
                   onPressed: () {
                     String searchQuery = _searchController.text;
                     Navigator.push(
@@ -113,10 +115,10 @@ class MyHomePage extends StatelessWidget {
                   crossAxisCount: 2,
                   mainAxisSpacing: 20.0,
                   crossAxisSpacing: 10.0,
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  children: <Widget>[
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: const <Widget>[
                     ProductBox(
                       name: "Tom Yum Kung",
                       description: "Estimate Time: 15 minutes",
@@ -124,7 +126,8 @@ class MyHomePage extends StatelessWidget {
                       image: "https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2023/04/24/5608757681874e1ea5df1aa41d5b2e3d_How_To_Make_Tom_Yam_Kung_The_Epitome_Of_Delicious_And_Nutritious_Thai_Cuisine3.jpg",
                     ),
                     ProductBox(
-                      name: "Kaeng Khiao Wan",                      description: "Estimate Time: 17 minutes",
+                      name: "Kaeng Khiao Wan",                      
+                      description: "Estimate Time: 17 minutes",
                       Detail: "See More>>",
                       image: "https://i.guim.co.uk/img/media/2f18f5a49694c482c1476bc51949e38a07b1c097/86_1686_4662_4662/master/4662.jpg?width=700&quality=85&auto=format&fit=max&s=0410e79f847cf5d3ddfebc5604cdd2f2",
                     ),
@@ -202,13 +205,13 @@ class MyHomePage extends StatelessWidget {
 
 
 class ProductBox extends StatelessWidget {
-  ProductBox({
-    Key? key,
+  const ProductBox({
+    super.key,
     required this.name,
     required this.description,
     required this.Detail,
     required this.image,
-  }) : super(key: key);
+  });
 
   final String name;
   final String description;
@@ -218,7 +221,7 @@ class ProductBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       child: Card(
         color: Colors.yellow, // Set the color of the card to yellow
         child: Column(
@@ -231,18 +234,18 @@ class ProductBox extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    this.name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    name,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 4),
-                  Text(this.description),
-                  SizedBox(height: 4),
-                  Text(this.Detail),
+                  const SizedBox(height: 4),
+                  Text(description),
+                  const SizedBox(height: 4),
+                  Text(Detail),
                 ],
               ),
             ),
@@ -254,6 +257,8 @@ class ProductBox extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -262,6 +267,8 @@ class HomePage extends StatelessWidget {
 }
 
 class CategoryPage extends StatelessWidget {
+  const CategoryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -270,6 +277,8 @@ class CategoryPage extends StatelessWidget {
 }
 
 class LocationPage extends StatelessWidget {
+  const LocationPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -278,6 +287,8 @@ class LocationPage extends StatelessWidget {
 }
 
 class FavoritePage extends StatelessWidget {
+  const FavoritePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -286,6 +297,8 @@ class FavoritePage extends StatelessWidget {
 }
 
 class SettingPage extends StatelessWidget {
+  const SettingPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -295,13 +308,13 @@ class SettingPage extends StatelessWidget {
 
 class ResultsPage extends StatelessWidget {
   final String searchQuery;
-  ResultsPage({required this.searchQuery});
+  const ResultsPage({super.key, required this.searchQuery});
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Results'),
+        title: const Text('Search Results'),
       ),
       body: Center(
         child: Text('Displaying results for: $searchQuery'),

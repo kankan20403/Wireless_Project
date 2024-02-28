@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => MainPage(),
-        '/MainPage': (context) => MainPage(),
+        '/': (context) => const MainPage(),
+        '/MainPage': (context) => const MainPage(),
       },
     );
   }
 }
 
 class MainPage extends StatelessWidget {
+  const MainPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: TitleWidget(),
+        title: const TitleWidget(),
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
@@ -31,8 +35,8 @@ class MainPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 20),
-            DetailWidget(
+            const SizedBox(height: 20),
+            const DetailWidget(
               image:
                   'https://hot-thai-kitchen.com/wp-content/uploads/2022/10/pad-gaprao-beef-sq-2.jpg',
               name: 'Pad Kra Pao',
@@ -53,7 +57,7 @@ class MainPage extends StatelessWidget {
                   '6. Serve Pad Kra Pao over rice, topped with a Thai-style crispy fried egg. \n'
                   'Finished!!',
             ),
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
             ElevatedButton(
               onPressed: () {
                 // Add functionality here
@@ -62,25 +66,27 @@ class MainPage extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.yellow,
               ),
-              child: Text(
+              child: const Text(
                 'Favorite',
                 style: TextStyle(color: Colors.black),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
-      bottomNavigationBar: BottomBar(), // Use the custom bottom navigation bar
+      bottomNavigationBar: const BottomBar(), // Use the custom bottom navigation bar
     );
   }
 }
 
 class TitleWidget extends StatelessWidget {
+  const TitleWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return RichText(
-      text: TextSpan(
+      text: const TextSpan(
         children: [
           TextSpan(
             text: 'Coach',
@@ -102,7 +108,7 @@ class DetailWidget extends StatefulWidget {
   final String ingredients;
   final String method;
 
-  DetailWidget({
+  const DetailWidget({super.key, 
     required this.image,
     required this.name,
     required this.ingredients,
@@ -117,11 +123,11 @@ class _DetailWidgetState extends State<DetailWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           GestureDetector(
             onTap: () {
               // Add functionality here
@@ -137,33 +143,33 @@ class _DetailWidgetState extends State<DetailWidget> {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             widget.name,
-            style: TextStyle(fontSize: 32),
+            style: const TextStyle(fontSize: 32),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             color: Colors.yellow, // Box color
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Ingredients:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   widget.ingredients,
                 ),
-                SizedBox(height: 10),
-                Text(
+                const SizedBox(height: 10),
+                const Text(
                   'Method:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   widget.method,
                 ),
@@ -177,6 +183,8 @@ class _DetailWidgetState extends State<DetailWidget> {
 }
 
 class BottomBar extends StatelessWidget {
+  const BottomBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Positioned(

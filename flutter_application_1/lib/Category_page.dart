@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,13 +12,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CategoryPage(title: 'CoachCook Category Layout'),
+      home: const CategoryPage(title: 'CoachCook Category Layout'),
     );
   }
 }
 
 class CategoryPage extends StatelessWidget {
-  CategoryPage({Key? key, required this.title}) : super(key: key);
+  const CategoryPage({super.key, required this.title});
   final String title;
 
   @override
@@ -24,11 +26,11 @@ class CategoryPage extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(200.0),
+        preferredSize: const Size.fromHeight(200.0),
         child: AppBar(
           flexibleSpace: Container(
-            padding: EdgeInsets.symmetric(vertical: 40.0),
-            child: Column(
+            padding: const EdgeInsets.symmetric(vertical: 40.0),
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -68,15 +70,15 @@ class CategoryPage extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: 300,
           child: Table(
             border: TableBorder.all(),
-            columnWidths: {
+            columnWidths: const {
               0: FlexColumnWidth(1),
               1: FlexColumnWidth(1),
             },
-            children: [
+            children: const [
               TableRow(
                 children: [
                   TableCell(
@@ -191,7 +193,7 @@ class CategoryBox extends StatelessWidget {
   final String image;
   final String text;
 
-  const CategoryBox({
+  const CategoryBox({super.key, 
     required this.image,
     required this.text,
   });
@@ -213,7 +215,7 @@ class CategoryBox extends StatelessWidget {
       child: Center(
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
             color: Colors.white,
