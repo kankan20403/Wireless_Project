@@ -1,39 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() => runApp(const MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Category',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: RegisterPage(title: 'CoachCook Category Layout'),
+    title: 'Category',
+    theme: ThemeData(
+    primarySwatch: Colors.blue,
+    ),
+    home: RegisterPage(title: 'CoachCook Category Layout'),
     );
   }
 }
 
 class RegisterPage extends StatelessWidget {
-  RegisterPage({required this.title});
-
+  RegisterPage({Key? key, required this.title}) : super(key: key);
   final String title;
-  final _formKey = GlobalKey<FormBuilderState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  String _email = "";
+  String _password = "";
+
+  void _handleSignUp() async {
+    try {
+      await _auth.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      print("User Registered: ${_auth.currentUser!.email}");
+    } catch (e) {
+      print("Error During Registration: $e");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(200.0),
+        preferredSize: Size.fromHeight(200.0),
         child: AppBar(
           flexibleSpace: Container(
-            padding: const EdgeInsets.symmetric(vertical: 40.0),
-            child: const Column(
+            padding: EdgeInsets.symmetric(vertical: 40.0),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -63,109 +87,64 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: FormBuilder(
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Form(
             key: _formKey,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FormBuilderTextField(
-                  name: 'first_name',
-                  decoration: const InputDecoration(
-                    labelText: 'First Name',
+                TextFormField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Email",
                     labelStyle: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                  validator: FormBuilderValidators.required(),
-                ),
-                const SizedBox(height: 20.0),
-                FormBuilderTextField(
-                  name: 'last_name',
-                  decoration: const InputDecoration(
-                    labelText: 'Last Name',
-                    labelStyle: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  validator: FormBuilderValidators.required(),
-                ),
-                const SizedBox(height: 20.0),
-                FormBuilderTextField(
-                  name: 'username',
-                  decoration: const InputDecoration(
-                    labelText: 'Username',
-                    labelStyle: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  validator: FormBuilderValidators.required(),
-                ),
-                const SizedBox(height: 20.0),
-                FormBuilderTextField(
-                  name: 'password',
-                  style: const TextStyle(fontSize: 20.0),
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  obscureText: true,
-                  validator: FormBuilderValidators.required(),
-                ),
-                const SizedBox(height: 20.0),
-                FormBuilderTextField(
-                  name: 'confirmPassword',
-                  style: const TextStyle(fontSize: 20.0),
-                  decoration: const InputDecoration(
-                    labelText: 'Confirm Password',
-                    labelStyle: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  obscureText: true,
                   validator: (value) {
-                    if (value !=
-                        _formKey.currentState?.fields['password']?.value) {
-                      return 'Passwords do not match';
+                    if (value == null || value.isEmpty) {
+                      return "Please Enter Your Email";
                     }
                     return null;
                   },
                 ),
-                const SizedBox(height: 20.0),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Password",
+                    labelStyle: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please Enter Your Password";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 20),
                 ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                          _handleSignUp();
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.yellow,
                   ),
-                  onPressed: () {},
-                  child: const Text('Create Account'),
-                ),
-                const SizedBox(height: 10.0), // Adding spacing
-                GestureDetector(
-                  onTap: () {
-                    // Navigate to the sign-in page or perform any other action.
-                  },
-                  child: Text(
-                    'Sign in',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline, // Add underline
-                    ),
-                  ),
+                  child: Text("Create account"),
                 ),
               ],
             ),
