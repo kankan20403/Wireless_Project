@@ -1,323 +1,313 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      home: MyHomePage(title: 'Search Page'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const MainPage(),
+        '/MainPage': (context) => const MainPage(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({super.key, required this.title});
-
-  final String title;
-  final TextEditingController _searchController = TextEditingController();
+class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(115.0),
-        child: AppBar(
-          flexibleSpace: Container(
-            padding: const EdgeInsets.symmetric(vertical: 0.0),
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Coach',
-                      style: TextStyle(
-                        fontSize: 50.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFFFFDE59),
-                      ),
-                    ),
-                    Text(
-                      'Cook',
-                      style: TextStyle(
-                        fontSize: 50.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-                
-              ],
-            ),
-          ),
-        ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const TitleWidget(),
+        backgroundColor: Colors.white,
+        centerTitle: true,
       ),
-      body: Column(
+      body: const MenuPage(), // Display MenuPage as body
+      bottomNavigationBar:
+          const BottomBar(), // Use the custom bottom navigation bar
+    );
+  }
+}
+
+class TitleWidget extends StatelessWidget {
+  const TitleWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: const TextSpan(
         children: [
+          TextSpan(
+            text: 'Coach',
+            style: TextStyle(color: Colors.yellow, fontSize: 40),
+          ),
+          TextSpan(
+            text: 'Cook',
+            style: TextStyle(color: Colors.black, fontSize: 40),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Recipe {
+  final String name;
+  final String image;
+  final String totalTime;
+
+  Recipe({
+    required this.name,
+    required this.image,
+    required this.totalTime,
+  });
+
+  factory Recipe.fromJson(Map<String, dynamic> json) {
+    return Recipe(
+      name: json['name'] as String,
+      image: json['images'][0]['hostedLargeUrl'] as String,
+      totalTime: json['totalTime'] as String,
+    );
+  }
+}
+
+class RecipeApi {
+  static Future<List<Recipe>> getRecipe() async {
+    final response = await http.get(
+      Uri.parse(
+          'https://yummly2.p.rapidapi.com/feeds/list?limit=18&start=0&tag=list.recipe.popular'),
+      headers: {
+        "x-rapidapi-key": "4230bd5be4msh11946063cbd6fbcp154bb2jsn0ccd82a3a379",
+        "x-rapidapi-host": "yummly2.p.rapidapi.com",
+        "useQueryString": "true"
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body)['feed'];
+      return data
+          .map(
+              (recipeJson) => Recipe.fromJson(recipeJson['content']['details']))
+          .toList();
+    } else {
+      throw Exception('Failed to load recipes');
+    }
+  }
+}
+
+class RecipeCard extends StatelessWidget {
+  final String title;
+  final String imageUrl;
+  final String totalTime;
+
+  RecipeCard({
+    required this.title,
+    required this.imageUrl,
+    required this.totalTime,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.network(
+            imageUrl,
+            width: double.infinity,
+            height: 200,
+            fit: BoxFit.cover,
+          ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: const InputDecoration(
-                      hintText: 'Search...',
-                    ),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(width: 10),
-                DropdownButton<String>(
-                  items: <String>[
-                    'Pork',
-                    'Chicken',
-                    'Salmon',
-                    'Chilli',
-                    'Tomato',
-                    'Lemon',
-                    'Basil',
-                    'Shrimp'
-                  ].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {},
-                  hint: const Text('Select Ingredients'),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.search, color: Colors.black),
-                  onPressed: () {
-                    String searchQuery = _searchController.text;
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ResultsPage(searchQuery: searchQuery),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              children: [
-                GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20.0,
-                  crossAxisSpacing: 10.0,
-                  padding: const EdgeInsets.all(10.0),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: const <Widget>[
-                    ProductBox(
-                      name: "Tom Yum Kung",
-                      description: "Estimate Time: 15 minutes",
-                      Detail: "See More>>",
-                      image: "https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2023/04/24/5608757681874e1ea5df1aa41d5b2e3d_How_To_Make_Tom_Yam_Kung_The_Epitome_Of_Delicious_And_Nutritious_Thai_Cuisine3.jpg",
-                    ),
-                    ProductBox(
-                      name: "Kaeng Khiao Wan",                      
-                      description: "Estimate Time: 17 minutes",
-                      Detail: "See More>>",
-                      image: "https://i.guim.co.uk/img/media/2f18f5a49694c482c1476bc51949e38a07b1c097/86_1686_4662_4662/master/4662.jpg?width=700&quality=85&auto=format&fit=max&s=0410e79f847cf5d3ddfebc5604cdd2f2",
-                    ),
-                    ProductBox(
-                      name: "Yam Nua",
-                      description: "Estimate Time: 10 minutes",
-                      Detail: "See More>>",
-                      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZyiDay_1xYbI77ug2fxiCGzX4dceQz23HtsvszmUvXQ&",                    ),
-                    ProductBox(
-                      name: "Lemon Tiramisu",
-                      description: "Estimate Time: 45 minutes",
-                      Detail: "See More>>",
-                      image: "https://www.allrecipes.com/thmb/F0WKVaHvq_jb01FeuaebxQQAk68=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/8416444-Lemon-Tiramisu-2101-4x3-fcbe2aaa0a1e4c7db4fcc68ca1be042c.jpg",
-                    ),
-                    ProductBox(
-                      name: "Peanut Butter Banana Smoothie",
-                      description: "Estimate Time: 5 minutes",
-                      Detail: "See More>>",
-                      image: "https://www.allrecipes.com/thmb/4rP9U1N8yhd3lXCmF0XmBZi5I1A=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/221261-Peanut-Butter-Banana-Smoothie-DDMFS-4x3-79533eeb04c84b42aae440d643fc9a31.jpg",
-                    ),
-                    ProductBox(
-                      name: "Pad Kra Pao",
-                      description: "Estimate Time: 23 minutes",
-                      Detail: "See More>>",
-                      image: "https://www.foodandwine.com/thmb/Z5FeE6c1mJfx6A6x1FBWSfzzo80=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Pad-Krapow-1-FT-RECIPE0423-212e69119f6d4d2589117ead80cccc4d.jpg",
-                    ),
-                  ],
+                Text(
+                  'Total Time: $totalTime',
+                  style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: SizedBox(
-        height: 100, // Adjust the height as needed
-        child: Center(
-          child: Container(
-            color: Colors.yellow,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Image.network(
-                  'https://cdn-icons-png.flaticon.com/256/25/25694.png', // Image URL
-                  width: 50,
-                  height: 50,
+    );
+  }
+}
+
+class MenuPage extends StatefulWidget {
+  const MenuPage({Key? key}) : super(key: key);
+
+  @override
+  _MenuPageState createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
+  late List<Recipe> _recipes;
+  late List<Recipe> _filteredRecipes;
+  bool _isLoading = true;
+  TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _recipes = [];
+    _filteredRecipes = [];
+    getRecipes();
+  }
+
+  Future<void> getRecipes() async {
+    try {
+      final recipes = await RecipeApi.getRecipe();
+      setState(() {
+        _recipes = recipes;
+        _filteredRecipes = recipes;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error fetching recipes: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _filterRecipes(String searchTerm) {
+    setState(() {
+      _filteredRecipes = _recipes
+          .where((recipe) =>
+              recipe.name.toLowerCase().contains(searchTerm.toLowerCase()))
+          .toList();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: _filterRecipes,
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-                Image.network(
-                  'https://i.pinimg.com/originals/8b/5c/49/8b5c498ed69a64d629249d9abe4f44a6.png', // Image URL for the first icon
-                  width: 50,
-                  height: 50,
+              ),
+              SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Implement ingredient selection logic here
+                  print('Select Ingredients');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: Colors.black),
+                  ),
                 ),
-                Image.network(
-                  'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png', // Image URL for the second icon
-                  width: 50,
-                  height: 50,
+                child: const Text(
+                  'Select Ingredients',
+                  style: TextStyle(color: Colors.black),
                 ),
-                Image.network(
-                  'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png', // Image URL for the third icon
-                  width: 50,
-                  height: 50,
-                ),
-                Image.network(
-                  'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png', // Image URL for the fourth icon
-                  width: 50,
-                  height: 50,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-
-class ProductBox extends StatelessWidget {
-  const ProductBox({
-    super.key,
-    required this.name,
-    required this.description,
-    required this.Detail,
-    required this.image,
-  });
-
-  final String name;
-  final String description;
-  final String Detail;
-  final String image;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      child: Card(
-        color: Colors.yellow, // Set the color of the card to yellow
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: Image.network(
-                image,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+        Expanded(
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // Display 2 columns
+                    mainAxisSpacing: 10.0, // Spacing between rows
+                    crossAxisSpacing: 10.0, // Spacing between columns
                   ),
-                  const SizedBox(height: 4),
-                  Text(description),
-                  const SizedBox(height: 4),
-                  Text(Detail),
-                ],
-              ),
-            ),
-          ],
+                  itemCount: _filteredRecipes.length,
+                  itemBuilder: (context, index) {
+                    final recipe = _filteredRecipes[index];
+                    return RecipeCard(
+                      title: recipe.name,
+                      imageUrl: recipe.image,
+                      totalTime: recipe.totalTime,
+                    );
+                  },
+                ),
         ),
-      ),
+      ],
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class BottomBar extends StatelessWidget {
+  const BottomBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
-
-class CategoryPage extends StatelessWidget {
-  const CategoryPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
-
-class LocationPage extends StatelessWidget {
-  const LocationPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
-
-class FavoritePage extends StatelessWidget {
-  const FavoritePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
-
-class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
-
-class ResultsPage extends StatelessWidget {
-  final String searchQuery;
-  const ResultsPage({super.key, required this.searchQuery});
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search Results'),
-      ),
-      body: Center(
-        child: Text('Displaying results for: $searchQuery'),
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 0,
+      child: SizedBox(
+        height: 50,
+        child: Container(
+          color: Colors.yellow,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Image.network(
+                'https://cdn-icons-png.flaticon.com/256/25/25694.png',
+                width: 50,
+                height: 50,
+              ),
+              Image.network(
+                'https://static.thenounproject.com/png/4411488-200.png',
+                width: 50,
+                height: 50,
+              ),
+              Image.network(
+                'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png',
+                width: 50,
+                height: 50,
+              ),
+              Image.network(
+                'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png',
+                width: 50,
+                height: 50,
+              ),
+              Image.network(
+                'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png',
+                width: 50,
+                height: 50,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

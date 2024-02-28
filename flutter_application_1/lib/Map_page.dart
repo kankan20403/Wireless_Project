@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -19,8 +21,42 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  List<String> imageUrls = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final response = await http.get(
+      Uri.parse('YOUR_API_ENDPOINT_HERE'),
+      // Add any required headers here
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      final List<String> urls = [];
+      for (final item in data) {
+        final String imageUrl = item['image'];
+        urls.add(imageUrl);
+      }
+      setState(() {
+        imageUrls = urls;
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +72,15 @@ class MainPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 20),
-            DetailWidget(
-              data: {
-                'image':
-                    'https://staticmapmaker.com/img/google-placeholder.png',
-              },
-            ),
+            for (final imageUrl in imageUrls)
+              DetailWidget(
+                data: {'image': imageUrl},
+              ),
             const SizedBox(height: 20),
           ],
         ),
       ),
-      bottomNavigationBar: const BottomBar(), // Use the custom bottom navigation bar
+      bottomNavigationBar: const BottomBar(),
     );
   }
 }
@@ -93,11 +127,13 @@ class DetailWidget extends StatelessWidget {
             },
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.yellow, width: 4), // Yellow frame
+                border:
+                    Border.all(color: Colors.yellow, width: 4), // Yellow frame
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(8), // Adjust this value as needed
+                borderRadius:
+                    BorderRadius.circular(8), // Adjust this value as needed
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: MediaQuery.of(context).size.width * 1.2,
