@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -67,19 +69,7 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            const SizedBox(height: 20),
-            for (final imageUrl in imageUrls)
-              DetailWidget(
-                data: {'image': imageUrl},
-              ),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
+      body: MyHomeScreen(),
       bottomNavigationBar: const BottomBar(),
     );
   }
@@ -128,12 +118,12 @@ class DetailWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border:
-                    Border.all(color: Colors.yellow, width: 4), // Yellow frame
+                Border.all(color: Colors.yellow, width: 4), // Yellow frame
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ClipRRect(
                 borderRadius:
-                    BorderRadius.circular(8), // Adjust this value as needed
+                BorderRadius.circular(8), // Adjust this value as needed
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: MediaQuery.of(context).size.width * 1.2,
@@ -150,7 +140,7 @@ class DetailWidget extends StatelessWidget {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
+                                loadingProgress.expectedTotalBytes!
                                 : null,
                           ),
                         );
@@ -212,6 +202,30 @@ class BottomBar extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class MyHomeScreen extends StatefulWidget {
+  @override
+  State<MyHomeScreen> createState() => _MyHomeScreenState();
+}
+
+class _MyHomeScreenState extends State<MyHomeScreen> {
+  final Completer<GoogleMapController> _controller = Completer();
+
+  static const CameraPosition _initialPosition = CameraPosition(
+    target: LatLng(13.794670667719059, 100.32408704380762),
+    zoom: 14,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return GoogleMap(
+      initialCameraPosition: _initialPosition,
+      onMapCreated: (GoogleMapController controller) {
+        _controller.complete(controller);
+      },
     );
   }
 }
