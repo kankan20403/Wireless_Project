@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'Menu_page.dart';
 
-/*void main() {
+void main() {
   runApp(const MyApp());
 }
 
@@ -15,11 +16,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const ChangePasswordPage(),
-        '/ChangePasswordPage': (context) => const ChangePasswordPage(),
+        '/ChangePasswordPage': (context) => const ChangePasswordPage()
       },
     );
   }
-}*/
+}
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({Key? key}) : super(key: key);
@@ -133,7 +134,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
                         // Open SearchPage
-                        Navigator.pushNamed(context, '/MainPage'); //Menu_page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MainMenuPage()),
+                          );
+
                       } else {
                         print("Validation failed");
                       }
