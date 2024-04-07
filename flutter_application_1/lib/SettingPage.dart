@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ChangePassword.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const SettingPage(),
         '/SettingPage': (context) => const SettingPage(),
+        '/ChangePasswordPage': (context) => const ChangePasswordPage()
       },
     );
   }
@@ -95,3 +97,4 @@ class SettingPage extends StatelessWidget {
     );
   }
 }
+
