@@ -3,7 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'Register_page.dart';
 import 'Menu_page.dart';
-import 'ForgetPassword.dart';
+import 'EmailValidation.dart';
 
 void main() => runApp(const MyApp());
 
@@ -145,7 +145,7 @@ class Login_PageState extends State<LoginPage> {
                         // Open forgetPasswordPage
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ForgetPasswordPage()),
+                          MaterialPageRoute(builder: (context) => EmailValidationPage()),
                         );
                       }
                     },
