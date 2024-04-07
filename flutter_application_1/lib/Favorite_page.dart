@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'Category_page.dart';
+import 'Map_page.dart';
+import 'Menu_page.dart';
+import 'SettingPage.dart';
+import 'PadKraPrao_page.dart';
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +17,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Favorite'),
+      home: FavoritePage(title: 'Favorite'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({super.key, required this.title});
+class FavoritePage extends StatelessWidget {
+  FavoritePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
   final TextEditingController _searchController = TextEditingController();
@@ -72,54 +77,7 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: const InputDecoration(
-                      hintText: 'Search...',
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                DropdownButton<String>(
-                  items: <String>[
-                    'Pork',
-                    'Chicken',
-                    'Salmon',
-                    'Chilli',
-                    'Tomato',
-                    'Lemon',
-                    'Basil',
-                    'Shrimp'
-                  ].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {},
-                  hint: const Text('Select Ingredients'),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.search, color: Colors.black),
-                  onPressed: () {
-                    String searchQuery = _searchController.text;
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ResultsPage(searchQuery: searchQuery),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-          Expanded(
+         Expanded(
             child: ListView(
               children: [
                 GridView.count(
@@ -129,42 +87,50 @@ class MyHomePage extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  children: const <Widget>[
+                  children: <Widget>[
                     ProductBox(
                       name: "Tom Yum Kung",
                       description: "Estimate Time: 15 minutes",
                       Detail: "See More>>",
-                      image: "https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2023/04/24/5608757681874e1ea5df1aa41d5b2e3d_How_To_Make_Tom_Yam_Kung_The_Epitome_Of_Delicious_And_Nutritious_Thai_Cuisine3.jpg",
+                      image: "/TomYumKung.jpg",
                     ),
                     ProductBox(
                       name: "Tom Kha Kai ",
                       description: "Estimate Time: 17 minutes",
                       Detail: "See More>>",
-                      image: "https://hot-thai-kitchen.com/wp-content/uploads/2014/06/Tom-kha-gai-new-sq.jpg",
+                      image: "/Tomkhagai.jpg",
                     ),
                     ProductBox(
                       name: "Hamburger",
                       description: "Estimate Time: 10 minutes",
                       Detail: "See More>>",
-                      image: "https://www.recettesetcabas.com/data/recettes/2379-1-fiche@64E36067-hamburger-a-la-tomme-de-savoie-bacon-et-salade.webp",
+                      image: "/hamburger.jpg",
                     ),
                     ProductBox(
                       name: "Sushi Roll",
                       description: "Estimate Time: 25 minutes",
                       Detail: "See More>>",
-                      image: "https://www.happyfoodstube.com/wp-content/uploads/2016/03/homemade-sushi-image-500x500.jpg",
+                      image: "/sushi.jpg",
                     ),
                     ProductBox(
                       name: "French Fries",
                       description: "Estimate Time: 15 minutes",
                       Detail: "See More>>",
-                      image: "https://www.recipetineats.com/wp-content/uploads/2022/09/Fries-with-rosemary-salt_1.jpg",
+                      image: "/frenchfries.jpg",
                     ),
-                    ProductBox(
-                      name: "Pad Kra Pao",
-                      description: "Estimate Time: 23 minutes",
-                      Detail: "See More>>",
-                      image: "https://www.foodandwine.com/thmb/Z5FeE6c1mJfx6A6x1FBWSfzzo80=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Pad-Krapow-1-FT-RECIPE0423-212e69119f6d4d2589117ead80cccc4d.jpg",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ResultPage())
+                        );
+                      },
+                      child: ProductBox(
+                        name: "Pad Kra Pao",
+                        description: "Estimate Time: 23 minutes",
+                        Detail: "See More>>",
+                        image: "/PadKrapow.jpg",
+                      ),
                     ),
                   ],
                 ),
@@ -181,30 +147,70 @@ class MyHomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Image.network(
-                  'https://cdn-icons-png.flaticon.com/256/25/25694.png', // Image URL
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainMenuPage()),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/home.png', // Image URL
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://i.pinimg.com/originals/8b/5c/49/8b5c498ed69a64d629249d9abe4f44a6.png', // Image URL for the first icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CategoryPage(title: 'CoachCook Category Layout')),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/category.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png', // Image URL for the second icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MapPage()),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/location.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png', // Image URL for the third icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FavoritePage(title: 'Favorite')),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/bookmark.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png', // Image URL for the fourth icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingPage()),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/setting.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
               ],
             ),
@@ -215,15 +221,14 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-
 class ProductBox extends StatelessWidget {
   const ProductBox({
-    super.key,
+    Key? key,
     required this.name,
     required this.description,
     required this.Detail,
     required this.image,
-  });
+  }) : super(key: key);
 
   final String name;
   final String description;
@@ -240,7 +245,7 @@ class ProductBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-              child: Image.network(
+              child: Image.asset(
                 image,
                 fit: BoxFit.cover,
               ),
@@ -263,23 +268,6 @@ class ProductBox extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ResultsPage extends StatelessWidget {
-  final String searchQuery;
-  const ResultsPage({super.key, required this.searchQuery});
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search Results'),
-      ),
-      body: Center(
-        child: Text('Displaying results for: $searchQuery'),
       ),
     );
   }
