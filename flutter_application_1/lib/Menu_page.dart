@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MainMenuPage(),
-        '/MainPage': (context) => const MainMenuPage(),
-      },
+      title: 'Homepage',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MainMenuPage(),
     );
   }
 }
@@ -296,8 +296,8 @@ class BottomBar extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => MainMenuPage()),
                     );
                   },
-                  icon: Image.network(
-                    'https://cdn-icons-png.flaticon.com/256/25/25694.png', // Image URL
+                  icon: Image.asset(
+                    '/hone.png',
                     width: 50,
                     height: 50,
                   ),
@@ -310,7 +310,7 @@ class BottomBar extends StatelessWidget {
                     );
                   },
                   icon: Image.asset(
-                    '/category.png', // Image URL for the first icon
+                    '/category.png',
                     width: 50,
                     height: 50,
                   ),
@@ -322,8 +322,8 @@ class BottomBar extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => MapPage()),
                     );
                   },
-                  icon: Image.network(
-                    'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png', // Image URL for the second icon
+                  icon: Image.asset(
+                    '/location.png',
                     width: 50,
                     height: 50,
                   ),
@@ -335,8 +335,8 @@ class BottomBar extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => FavoritePage(title: 'Favorite')),
                     );
                   },
-                  icon: Image.network(
-                    'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png', // Image URL for the third icon
+                  icon: Image.asset(
+                    '/bookmark.png',
                     width: 50,
                     height: 50,
                   ),
@@ -349,7 +349,7 @@ class BottomBar extends StatelessWidget {
                     );
                   },
                   icon: Image.network(
-                    'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png', // Image URL for the fourth icon
+                    '/setting.png',
                     width: 50,
                     height: 50,
                   ),
