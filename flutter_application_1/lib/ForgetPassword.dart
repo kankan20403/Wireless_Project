@@ -14,11 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const ForgetPasswordPage(),
-        '/ForgetPasswordPage': (context) => const ForgetPasswordPage(),
-      },
+      title: 'Forget password',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const ForgetPasswordPage(),
     );
   }
 }
