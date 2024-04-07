@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'Menu_page.dart';
+import 'PotatoSoup_page.dart';
+import 'Category_page.dart';
+import 'Map_page.dart';
+import 'Favorite_page.dart';
+import 'SettingPage.dart';
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,19 +18,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'CoachCook Category Layout'),
+      home: SoupPage(title: 'CoachCook Soup'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({super.key, required this.title});
+class SoupPage extends StatelessWidget {
+  SoupPage({Key? key, required this.title}) : super(key: key);
   final String title;
   final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(115.0),
@@ -87,14 +92,14 @@ class MyHomePage extends StatelessWidget {
                 const SizedBox(width: 10),
                 DropdownButton<String>(
                   items: <String>[
-                    'Pork',
-                    'Chicken',
-                    'Salmon',
-                    'Chilli',
-                    'Tomato',
-                    'Lemon',
-                    'Basil',
-                    'Shrimp'
+                    'Main Course',
+                    'Appetizer',
+                    'Salad',
+                    'Soup',
+                    'Dessert',
+                    'Beverage',
+                    'Breakfast',
+                    'Lunch'
                   ].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -102,7 +107,7 @@ class MyHomePage extends StatelessWidget {
                     );
                   }).toList(),
                   onChanged: (String? newValue) {},
-                  hint: const Text('Select Ingredients'),
+                  hint: const Text('Select Category'),
                 ),
                 IconButton(
                   icon: const Icon(Icons.search, color: Colors.black),
@@ -121,51 +126,59 @@ class MyHomePage extends StatelessWidget {
           ),
           Expanded(
             child: ListView(
-        children: [
-          GridView.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20.0,
-            crossAxisSpacing: 10.0,
-            padding: const EdgeInsets.all(10.0),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: const <Widget>[
-              ProductBox(
-                name: "Tomato Soup",
-                description: "Estimate Time: 15 minutes",
-                detail: "See More>>",
-                image: "https://www.acouplecooks.com/wp-content/uploads/2021/09/Tomato-Soup-002s.jpg",
-              ),
-              ProductBox(
-                name: "Mushroom Soup",
-                description: "Estimate Time: 17 minutes",
-                detail: "See More>>",
-                image: "https://rainbowplantlife.com/wp-content/uploads/2022/11/Mushroom-soup-cover-image-1-of-1.jpg",
-              ),
-              ProductBox(
-                name: "Chicken Soup",
-                description: "Estimate Time: 10 minutes",
-                detail: "See More>>",
-                image: "https://food-images.files.bbci.co.uk/food/recipes/chickensoup_1918_16x9.jpg",
-              ),
-              ProductBox(
-                name: "Corn Soup",
-                description: "Estimate Time: 25 minutes",
-                detail: "See More>>",
-                image: "https://assets.unileversolutions.com/recipes-v2/175495.jpg",
-              ),
-              ProductBox(
-                name: "Spinach Soup",
-                description: "Estimate Time: 15 minutes",
-                detail: "See More>>",
-                image: "https://mypureplants.com/wp-content/uploads/2019/03/cream-of-spinach-soup-vegan-7.jpg",
-              ),
-              ProductBox(
-                name: "Potato Soup",
-                description: "Estimate Time: 23 minutes",
-                detail: "See More>>",
-                image: "https://www.seannaskitchen.com/wp-content/uploads/2021/04/Cheesy-Potato-Soup-Hero-3.jpg",
-               ),
+              children: [
+                GridView.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20.0,
+                  crossAxisSpacing: 10.0,
+                  padding: const EdgeInsets.all(10.0),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    ProductBox(
+                      name: "Tomato Soup",
+                      description: "Estimate Time: 15 minutes",
+                      detail: "See More>>",
+                      image: "https://www.acouplecooks.com/wp-content/uploads/2021/09/Tomato-Soup-002s.jpg",
+                    ),
+                    ProductBox(
+                      name: "Mushroom Soup",
+                      description: "Estimate Time: 17 minutes",
+                      detail: "See More>>",
+                      image: "https://rainbowplantlife.com/wp-content/uploads/2022/11/Mushroom-soup-cover-image-1-of-1.jpg",
+                    ),
+                    ProductBox(
+                      name: "Chicken Soup",
+                      description: "Estimate Time: 10 minutes",
+                      detail: "See More>>",
+                      image: "https://food-images.files.bbci.co.uk/food/recipes/chickensoup_1918_16x9.jpg",
+                    ),
+                    ProductBox(
+                      name: "Corn Soup",
+                      description: "Estimate Time: 25 minutes",
+                      detail: "See More>>",
+                      image: "https://assets.unileversolutions.com/recipes-v2/175495.jpg",
+                    ),
+                    ProductBox(
+                      name: "Spinach Soup",
+                      description: "Estimate Time: 15 minutes",
+                      detail: "See More>>",
+                      image: "https://mypureplants.com/wp-content/uploads/2019/03/cream-of-spinach-soup-vegan-7.jpg",
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SoupDetailedPage())
+                        );
+                      },
+                      child: ProductBox(
+                        name: "Potato Soup",
+                        description: "Estimate Time: 23 minutes",
+                        detail: "See More>>",
+                        image: "https://www.seannaskitchen.com/wp-content/uploads/2021/04/Cheesy-Potato-Soup-Hero-3.jpg",
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -181,30 +194,70 @@ class MyHomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Image.network(
-                  'https://cdn-icons-png.flaticon.com/256/25/25694.png', // Image URL
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainMenuPage()),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/home.png', // Image URL
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://i.pinimg.com/originals/8b/5c/49/8b5c498ed69a64d629249d9abe4f44a6.png', // Image URL for the first icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CategoryPage(title: 'CoachCook Category Layout')),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/category.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png', // Image URL for the second icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MapPage()),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/location.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png', // Image URL for the third icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FavoritePage(title: 'Favorite')),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/bookmark.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png', // Image URL for the fourth icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingPage()),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/setting.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
               ],
             ),
@@ -217,12 +270,12 @@ class MyHomePage extends StatelessWidget {
 
 class ProductBox extends StatelessWidget {
   const ProductBox({
-    super.key,
+    Key? key,
     required this.name,
     required this.description,
     required this.detail,
     required this.image,
-  });
+  }) : super(key: key);
 
   final String name;
   final String description;
@@ -266,12 +319,13 @@ class ProductBox extends StatelessWidget {
     );
   }
 }
+
 class ResultsPage extends StatelessWidget {
   final String searchQuery;
-  const ResultsPage({super.key, required this.searchQuery});
+  const ResultsPage({Key? key, required this.searchQuery}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search Results'),
@@ -282,3 +336,4 @@ class ResultsPage extends StatelessWidget {
     );
   }
 }
+
