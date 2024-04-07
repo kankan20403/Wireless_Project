@@ -14,9 +14,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const SettingPage(),
-        '/SettingPage': (context) => const SettingPage(),
-        '/ChangePasswordPage': (context) => const ChangePasswordPage()
-      },
+      }
     );
   }
 }
@@ -74,7 +72,10 @@ class SettingPage extends StatelessWidget {
             ),
             onTap: () {
               // Navigate to change password page
-              Navigator.pushNamed(context, '/ChangePasswordPage');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+              );
             },
           ),
           ListTile(
@@ -97,4 +98,5 @@ class SettingPage extends StatelessWidget {
     );
   }
 }
+
 
