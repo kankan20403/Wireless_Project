@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'CoachCook Category Layout'),
+      home: PotatoResultsPage(title: 'CoachCook Category Layout'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({super.key, required this.title});
+class PotatoResultsPage extends StatelessWidget {
+  PotatoResultsPage({super.key, required this.title});
   final String title;
   final TextEditingController _searchController = TextEditingController();
 
@@ -99,7 +99,8 @@ class MyHomePage extends StatelessWidget {
                     'Dessert',
                     'Beverage',
                     'Breakfast',
-                    'Lunch'
+                    'Lunch',
+                    'Potato'
                   ].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
