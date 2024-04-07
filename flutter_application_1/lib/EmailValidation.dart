@@ -11,13 +11,13 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const EmailValidationPage(),
-        '/EmailValidationPage': (context) => const EmailValidationPage(),
-      },
+      title: 'Email Validation',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const EmailValidationPage(),
     );
   }
 }
