@@ -297,7 +297,7 @@ class BottomBar extends StatelessWidget {
                     );
                   },
                   icon: Image.asset(
-                    '/hone.png',
+                    '/home.png',
                     width: 50,
                     height: 50,
                   ),
@@ -348,7 +348,7 @@ class BottomBar extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => SettingPage()),
                     );
                   },
-                  icon: Image.network(
+                  icon: Image.asset(
                     '/setting.png',
                     width: 50,
                     height: 50,
