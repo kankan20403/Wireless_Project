@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'Category_page.dart';
+import 'Favorite_page.dart';
+import 'Map_page.dart';
+import 'Menu_page.dart';
+import 'SettingPage.dart';
 
 void main() => runApp(const MyApp());
 
@@ -87,15 +92,14 @@ class MyHomePage extends StatelessWidget {
                 const SizedBox(width: 10),
                 DropdownButton<String>(
                   items: <String>[
-                    'Potato'
-                    'Pork',
-                    'Chicken',
-                    'Salmon',
-                    'Chilli',
-                    'Tomato',
-                    'Lemon',
-                    'Basil',
-                    'Shrimp'
+                    'Main Course',
+                    'Appetizer',
+                    'Salad',
+                    'Soup',
+                    'Dessert',
+                    'Beverage',
+                    'Breakfast',
+                    'Lunch'
                   ].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -103,7 +107,7 @@ class MyHomePage extends StatelessWidget {
                     );
                   }).toList(),
                   onChanged: (String? newValue) {},
-                  hint: const Text('Select Ingredients'),
+                  hint: const Text('Select Category'),
                 ),
                 IconButton(
                   icon: const Icon(Icons.search, color: Colors.black),
@@ -182,30 +186,70 @@ class MyHomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Image.network(
-                  'https://cdn-icons-png.flaticon.com/256/25/25694.png', // Image URL
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainMenuPage()),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/home.png', // Image URL
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://i.pinimg.com/originals/8b/5c/49/8b5c498ed69a64d629249d9abe4f44a6.png', // Image URL for the first icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CategoryPage(title: 'CoachCook Category Layout')),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/category.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png', // Image URL for the second icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MapPage()),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/location.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png', // Image URL for the third icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FavoritePage(title: 'Favorite')),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/bookmark.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
-                Image.network(
-                  'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png', // Image URL for the fourth icon
-                  width: 50,
-                  height: 50,
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingPage()),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/setting.png',
+                    width: 50,
+                    height: 50,
+                  ),
                 ),
               ],
             ),
