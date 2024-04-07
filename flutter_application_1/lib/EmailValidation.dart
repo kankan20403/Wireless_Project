@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:proj1/pages/OTPValidation.dart';
+import 'OTPValidation.dart';
 
-/*void main() {
+void main() {
   runApp(const MyApp());
 }
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       },
     );
   }
-}*/
+}
 
 class EmailValidationPage extends StatefulWidget {
   const EmailValidationPage({Key? key}) : super(key: key);
@@ -101,7 +101,10 @@ class _EmailValidationPageState extends State<EmailValidationPage> {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
                         // Navigate to OTPValidationPage
-                        Navigator.pushNamed(context, '/OTPValidationPage');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => OTPValidationPage()),
+                        );
                       } else {
                         print("Validation failed");
                       }
@@ -121,3 +124,4 @@ class _EmailValidationPageState extends State<EmailValidationPage> {
     );
   }
 }
+
