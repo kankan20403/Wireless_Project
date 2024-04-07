@@ -14,11 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const OTPValidationPage(),
-        '/OTPValidationPage': (context) => const OTPValidationPage(),
-      },
+      title: 'OTP',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const OTPValidationPage(),
     );
   }
 }
