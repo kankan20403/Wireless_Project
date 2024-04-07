@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MainMenuPage(),
-        '/MainPage': (context) => const MainMenuPage(),
-      },
+      title: 'Result',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const ResultPage(),
     );
   }
 }
