@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'ChangePassword.dart';
 
-/*void main() {
+
+void main() {
   runApp(const MyApp());
 }
 
@@ -19,7 +21,8 @@ class MyApp extends StatelessWidget {
       },
     );
   }
-}*/
+}
+
 
 class OTPValidationPage extends StatefulWidget {
   const OTPValidationPage({Key? key}) : super(key: key);
@@ -114,7 +117,10 @@ class _OTPValidationPageState extends State<OTPValidationPage> {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
                         // Open SearchPage
-                        Navigator.pushNamed(context, '/ForgetPasswordPage'); 
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+                        );
                       } else {
                         print("Validation failed");
                       }
@@ -134,6 +140,10 @@ class _OTPValidationPageState extends State<OTPValidationPage> {
                   OutlinedButton(
                     onPressed: () {
                       // Perform resend OTP action here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => OTPValidationPage()),
+                      );
                       print('Resend Button Pressed');
                     },
                     style: ButtonStyle(
