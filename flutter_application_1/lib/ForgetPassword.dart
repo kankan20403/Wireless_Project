@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'EmailValidation.dart';
 
-/*void main() {
+
+void main() {
   runApp(const MyApp());
 }
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       },
     );
   }
-}*/
+}
 
 class ForgetPasswordPage extends StatefulWidget {
   const ForgetPasswordPage({Key? key}) : super(key: key);
@@ -122,8 +124,10 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                     onPressed: () {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
-                        // Open SearchPage
-                        Navigator.pushNamed(context, '/'); //LoginPage
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => EmailValidationPage()),
+                        );
                       } else {
                         print("Validation failed");
                       }
