@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'LoginPage.dart';
 import 'firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     theme: ThemeData(
     primarySwatch: Colors.blue,
     ),
-    home: RegisterPage(title: 'CoachCook Category Layout'),
+    home: RegisterPage(title: 'CoachCook Layout'),
     );
   }
 }
@@ -139,6 +140,10 @@ class RegisterPage extends StatelessWidget {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                           _handleSignUp();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginPage('',title: 'CoachCook Layout',)),
+                          );
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -154,3 +159,4 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
+
