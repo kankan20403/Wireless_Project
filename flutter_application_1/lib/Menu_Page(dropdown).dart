@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'SoupResult_page.dart';
 import 'dart:convert';
 import 'Category_page.dart';
 import 'Map_page.dart';
 import 'Favorite_page.dart';
 import 'SettingPage.dart';
 import 'Menu_page.dart';
+import 'PotatoResult_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,14 +17,14 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MainPage(),
-        '/MainPage': (context) => const MainPage(),
-        //'/PotatoPage': (context) => PotatoPage(), 
-      },
+      title: 'Menu',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MainPage(),
     );
   }
 }
@@ -182,7 +184,8 @@ class _MenuPageState extends State<MenuPage> {
     'Dessert',
     'Beverage',
     'Breakfast',
-    'Lunch'
+    'Lunch',
+    'Potato'
   ];
 
   @override
@@ -244,7 +247,16 @@ class _MenuPageState extends State<MenuPage> {
                     _selectedIngredient = newValue;
                   });
                   if (newValue == 'Potato') {
-                    Navigator.pushNamed(context, '/');//PotatoResultPage
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PotatoResultsPage(title: 'Results')),
+                    );
+                  }
+                  else if(newValue == 'Soup') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SoupPage(title: 'Soup')),
+                    );
                   }
                 },
                 items: _ingredients.map<DropdownMenuItem<String>>((String value) {
