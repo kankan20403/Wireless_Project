@@ -18,11 +18,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MapPage(),
-        '/MainPage': (context) => const MapPage(),
-      },
+      title: 'Map',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MapPage(),
     );
   }
 }
