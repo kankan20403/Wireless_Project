@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'Register_page.dart';
+import 'Menu_page.dart';
+import 'ForgetPassword.dart';
 
 void main() => runApp(const MyApp());
 
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(title: 'CoachCook Category Layout'), // Pass the title here
+      home: const LoginPage('',title: 'CoachCook Layout'), // Pass the title here
     );
   }
 }
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
 class LoginPage extends StatefulWidget {
   final String title; // Define the title parameter
 
-  const LoginPage({Key? key, required this.title}) : super(key: key);
+  const LoginPage(String s, {Key? key, required this.title}) : super(key: key);
 
   @override
   Login_PageState createState() => Login_PageState();
@@ -120,7 +123,10 @@ class Login_PageState extends State<LoginPage> {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
                         // Open SearchPage
-                        Navigator.pushNamed(context, '/ ');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainMenuPage()),
+                        );
                       } else {
                         print("Validation failed");
                       }
@@ -137,7 +143,10 @@ class Login_PageState extends State<LoginPage> {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
                         // Open forgetPasswordPage
-                        Navigator.pushNamed(context, '/ ');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ForgetPasswordPage()),
+                        );
                       }
                     },
                     color: const Color(0xFFFFDE59),
@@ -160,10 +169,11 @@ class Login_PageState extends State<LoginPage> {
               MaterialButton(
                 onPressed: () {
                   _formKey.currentState!.save();
-
                   // Open createPasswordPage
-                  Navigator.pushNamed(context, '/ ');
-
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterPage(title: 'CoachCook Layout')));
                 },
                 color: const Color(0xFFFFDE59),
                 child: const Text(
@@ -179,3 +189,4 @@ class Login_PageState extends State<LoginPage> {
     );
   }
 }
+
