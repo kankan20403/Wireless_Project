@@ -1,6 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'Category_page.dart';
+import 'Map_page.dart';
+import 'Favorite_page.dart';
+import 'SettingPage.dart';
+import 'Menu_Page(dropdown).dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,15 +19,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => const MainPage(),
-        '/MainPage': (context) => const MainPage(),
+        '/': (context) => const MainMenuPage(),
+        '/MainPage': (context) => const MainMenuPage(),
       },
     );
   }
 }
 
-class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
+class MainMenuPage extends StatelessWidget {
+  const MainMenuPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +227,11 @@ class _MenuPageState extends State<MenuPage> {
               ElevatedButton(
                 onPressed: () {
                   // Implement ingredient selection logic here
-                  print('Select Ingredients');
+                  print('Select Category');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainPage()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
@@ -232,7 +241,7 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
                 child: const Text(
-                  'Select Ingredients',
+                  'Select Category',
                   style: TextStyle(color: Colors.black),
                 ),
               ),
@@ -266,7 +275,6 @@ class _MenuPageState extends State<MenuPage> {
 
 class BottomBar extends StatelessWidget {
   const BottomBar({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -274,38 +282,80 @@ class BottomBar extends StatelessWidget {
       right: 0,
       bottom: 0,
       child: SizedBox(
-        height: 50,
-        child: Container(
-          color: Colors.yellow,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Image.network(
-                'https://cdn-icons-png.flaticon.com/256/25/25694.png',
-                width: 50,
-                height: 50,
-              ),
-              Image.network(
-                'https://static.thenounproject.com/png/4411488-200.png',
-                width: 50,
-                height: 50,
-              ),
-              Image.network(
-                'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png',
-                width: 50,
-                height: 50,
-              ),
-              Image.network(
-                'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png',
-                width: 50,
-                height: 50,
-              ),
-              Image.network(
-                'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png',
-                width: 50,
-                height: 50,
-              ),
-            ],
+        height: 100, // Adjust the height as needed
+        child: Center(
+          child: Container(
+            color: Colors.yellow,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainMenuPage()),
+                    );
+                  },
+                  icon: Image.network(
+                    'https://cdn-icons-png.flaticon.com/256/25/25694.png', // Image URL
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CategoryPage(title: 'CoachCook Category Layout')),
+                    );
+                  },
+                  icon: Image.asset(
+                    '/category.png', // Image URL for the first icon
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MapPage()),
+                    );
+                  },
+                  icon: Image.network(
+                    'https://cdn1.iconfinder.com/data/icons/ui-roundicons/480/circle_location-512.png', // Image URL for the second icon
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FavoritePage(title: 'Favorite')),
+                    );
+                  },
+                  icon: Image.network(
+                    'https://creazilla-store.fra1.digitaloceanspaces.com/icons/3250939/bookmark-icon-md.png', // Image URL for the third icon
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingPage()),
+                    );
+                  },
+                  icon: Image.network(
+                    'https://static-00.iconduck.com/assets.00/settings-icon-1964x2048-8nigtrtt.png', // Image URL for the fourth icon
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
