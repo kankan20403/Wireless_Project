@@ -92,14 +92,15 @@ class SoupPage extends StatelessWidget {
                 const SizedBox(width: 10),
                 DropdownButton<String>(
                   items: <String>[
-                    'Main Course',
-                    'Appetizer',
-                    'Salad',
-                    'Soup',
-                    'Dessert',
-                    'Beverage',
-                    'Breakfast',
-                    'Lunch'
+                    'Potato',
+                    'Pork',
+                    'Chicken',
+                    'Salmon',
+                    'Chilli',
+                    'Tomato',
+                    'Lemon',
+                    'Basil',
+                    'Shrimp'
                   ].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -107,7 +108,7 @@ class SoupPage extends StatelessWidget {
                     );
                   }).toList(),
                   onChanged: (String? newValue) {},
-                  hint: const Text('Select Category'),
+                  hint: const Text('Select Ingredient'),
                 ),
                 IconButton(
                   icon: const Icon(Icons.search, color: Colors.black),
