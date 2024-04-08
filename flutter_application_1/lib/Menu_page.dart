@@ -227,7 +227,7 @@ class _MenuPageState extends State<MenuPage> {
               ElevatedButton(
                 onPressed: () {
                   // Implement ingredient selection logic here
-                  print('Select Category');
+                  print('Select Ingredient');
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => MainPage()),
@@ -241,7 +241,7 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
                 child: const Text(
-                  'Select Category',
+                  'Select Ingredient',
                   style: TextStyle(color: Colors.black),
                 ),
               ),
