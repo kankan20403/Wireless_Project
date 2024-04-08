@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'SoupResult_page.dart';
 import 'dart:convert';
 import 'Category_page.dart';
 import 'Map_page.dart';
@@ -15,8 +14,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  @override
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -176,16 +173,16 @@ class _MenuPageState extends State<MenuPage> {
   TextEditingController _searchController = TextEditingController();
   String? _selectedIngredient; // Nullable to handle initial state
   List<String> _ingredients = [
-    'Select Category', // Placeholder
-    'Main Course',
-    'Appetizer',
-    'Salad',
-    'Soup',
-    'Dessert',
-    'Beverage',
-    'Breakfast',
-    'Lunch',
-    'Potato'
+    'Select Ingredient', // Placeholder
+    'Potato',
+    'Pork',
+    'Chicken',
+    'Salmon',
+    'Chilli',
+    'Tomato',
+    'Lemon',
+    'Basil',
+    'Shrimp'
   ];
 
   @override
@@ -252,16 +249,10 @@ class _MenuPageState extends State<MenuPage> {
                       MaterialPageRoute(builder: (context) => PotatoResultsPage(title: 'Results')),
                     );
                   }
-                  else if(newValue == 'Soup') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SoupPage(title: 'Soup')),
-                    );
-                  }
                 },
                 items: _ingredients.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
-                    value: value == 'Select Category' ? null : value,
+                    value: value == 'Select Ingredient' ? null : value,
                     child: Text(value),
                   );
                 }).toList(),
@@ -380,6 +371,8 @@ class BottomBar extends StatelessWidget {
     );
   }
 }
+
+
 
 
 
