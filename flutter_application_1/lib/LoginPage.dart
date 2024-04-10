@@ -3,9 +3,17 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'Register_page.dart';
 import 'Menu_page.dart';
-import 'EmailValidation.dart';
+import 'ForgetPassword.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'firebase_options.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -145,7 +153,7 @@ class Login_PageState extends State<LoginPage> {
                         // Open forgetPasswordPage
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => EmailValidationPage()),
+                          MaterialPageRoute(builder: (context) => ForgetPasswordPage()),
                         );
                       }
                     },
